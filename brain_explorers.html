@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Brain Explorers makes neuroscience fun with curious questions, simple activities, and brain facts." />
+  <title>Brain Explorers — Small brains. Big questions.</title>
+  <style>
+    :root {
+      --ink: #393477;
+      --muted: #5f5a91;
+      --cream: #fffaf5;
+      --lavender: #eee5ff;
+      --purple: #b78be9;
+      --pink: #f5b9d7;
+      --blue: #dff2ff;
+      --green: #e6f4df;
+      --yellow: #fff1c9;
+      --shadow: 0 10px 28px rgba(66, 51, 130, .09);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--cream);
+      font-family: "Trebuchet MS", "Avenir Next", system-ui, sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; }
+    .topbar {
+      position: sticky; top: 0; z-index: 10;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; padding: .8rem clamp(1rem, 5vw, 4rem);
+      background: rgba(255,250,245,.94); backdrop-filter: blur(12px);
+      border-bottom: 1px solid #eee5fa;
+    }
+    .brand { display: flex; align-items: center; gap: .75rem; text-decoration: none; }
+    .brand-mark { font-size: 2.4rem; line-height: 1; }
+    .brand-name { font-size: clamp(1.2rem, 2.5vw, 1.8rem); font-weight: 800; letter-spacing: .02em; }
+    .tagline { display: block; color: var(--muted); font-size: .8rem; margin-top: -.25rem; }
+    nav { display: flex; gap: .4rem; align-items: center; }
+    nav a {
+      text-decoration: none; padding: .55rem .9rem; border-radius: 999px;
+      font-size: .95rem; font-weight: 700;
+    }
+    nav a:hover, nav a:focus-visible { background: var(--lavender); outline: none; }
+    .hero {
+      overflow: hidden; position: relative;
+      display: grid; grid-template-columns: 1.1fr .9fr; align-items: center;
+      gap: 2rem; padding: clamp(3rem, 7vw, 6.5rem) clamp(1.25rem, 9vw, 8rem);
+      background: linear-gradient(115deg, #f0e5ff 0%, #e5eaff 55%, #ffeaf3 100%);
+    }
+    .hero::before, .hero::after {
+      content: "✦"; position: absolute; color: #f4c85f; font-size: 2.2rem; opacity: .8;
+    }
+    .hero::before { top: 18%; left: 5%; }
+    .hero::after { right: 7%; bottom: 15%; color: #b28ae9; }
+    .eyebrow { text-transform: uppercase; letter-spacing: .14em; font-size: .78rem; font-weight: 800; color: #7b64b4; }
+    h1 { font-size: clamp(2.5rem, 5vw, 4.8rem); line-height: 1.05; margin: .6rem 0 1rem; letter-spacing: -.04em; }
+    .hero p { max-width: 36rem; color: #514c82; font-size: clamp(1rem, 1.7vw, 1.2rem); }
+    .button {
+      display: inline-flex; align-items: center; gap: .6rem; border: 0; cursor: pointer;
+      background: var(--purple); color: #fff; font: inherit; font-weight: 800;
+      padding: .85rem 1.35rem; border-radius: 999px; text-decoration: none;
+      box-shadow: 0 5px 0 rgba(104, 69, 161, .12); transition: transform .18s, filter .18s;
+    }
+    .button:hover { transform: translateY(-2px); filter: brightness(1.03); }
+    .button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+    .brain-art { display: grid; place-items: center; min-height: 230px; }
+    .brain { font-size: clamp(9rem, 22vw, 17rem); filter: drop-shadow(0 12px 0 rgba(92, 55, 120, .08)); animation: float 4s ease-in-out infinite; }
+    @keyframes float { 0%,100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-10px) rotate(3deg); } }
+    section { padding: 4rem clamp(1rem, 6vw, 5rem); }
+    .section-heading { text-align: center; margin: 0 auto 2rem; max-width: 45rem; }
+    h2 { font-size: clamp(1.8rem, 3vw, 2.7rem); line-height: 1.2; margin: 0 0 .5rem; }
+    .section-heading p { color: var(--muted); margin: .5rem 0 0; }
+    .cards { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1rem; max-width: 1400px; margin: auto; }
+    .topic-card {
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      padding: 1.4rem 1rem; border: 1px solid rgba(80,65,130,.08); border-radius: 20px;
+      box-shadow: var(--shadow); min-height: 285px;
+    }
+    .topic-card:nth-child(1) { background: #f4e9ff; }
+    .topic-card:nth-child(2) { background: var(--blue); }
+    .topic-card:nth-child(3) { background: var(--green); }
+    .topic-card:nth-child(4) { background: #ffe8f2; }
+    .topic-card:nth-child(5) { background: var(--yellow); }
+    .topic-icon { font-size: 3.3rem; line-height: 1.2; margin-bottom: .6rem; }
+    .topic-card h3 { font-size: 1.08rem; line-height: 1.3; margin: .25rem 0 .5rem; }
+    .topic-card p { color: #5b5684; font-size: .92rem; margin: 0 0 1.1rem; }
+    .topic-card .button { margin-top: auto; padding: .55rem 1.1rem; font-size: .9rem; }
+    .topic-card:nth-child(2) .button { background: #69b5ed; }
+    .topic-card:nth-child(3) .button { background: #70bd91; }
+    .topic-card:nth-child(4) .button { background: #e77eae; }
+    .topic-card:nth-child(5) .button { background: #eab641; }
+    .why { background: #f6f2ff; }
+    .benefits { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; max-width: 1000px; margin: 2rem auto 0; text-align: center; }
+    .benefit-icon { font-size: 2.2rem; }
+    .benefits h3 { font-size: 1rem; margin: .4rem 0; }
+    .benefits p { color: var(--muted); font-size: .9rem; margin: 0; }
+    .quote {
+      margin: 0 auto; max-width: 1000px; text-align: center; padding: 1.2rem;
+      border-radius: 22px; background: linear-gradient(90deg, #e8d9ff, #f8dff0);
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem); font-weight: 800;
+    }
+    footer { padding: 2rem clamp(1rem, 6vw, 5rem); display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; border-top: 1px solid #e9e0f4; }
+    footer p { color: var(--muted); font-size: .9rem; margin: 0; }
+    .modal-backdrop { position: fixed; inset: 0; z-index: 30; background: rgba(35, 28, 70, .45); display: none; place-items: center; padding: 1rem; }
+    .modal-backdrop.open { display: grid; }
+    .modal { width: min(100%, 560px); max-height: 85vh; overflow: auto; background: #fffaf8; border-radius: 24px; padding: clamp(1.3rem, 4vw, 2.2rem); box-shadow: 0 25px 80px #29204a44; position: relative; }
+    .modal h2 { padding-right: 2rem; }
+    .close { position: absolute; top: 1rem; right: 1rem; border: 0; background: var(--lavender); color: var(--ink); width: 2.4rem; height: 2.4rem; border-radius: 50%; font-size: 1.3rem; cursor: pointer; }
+    .activity-box { background: #f0e8ff; border-radius: 16px; padding: 1rem; margin: 1rem 0; }
+    .activity-box strong { display: block; margin-bottom: .3rem; }
+    .answer-row { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .7rem; }
+    .answer-row button { border: 1px solid #cbb7ec; background: white; color: var(--ink); border-radius: 12px; padding: .65rem .85rem; font: inherit; cursor: pointer; }
+    .answer-row button:hover { background: #e9ddff; }
+    #feedback { font-weight: 800; min-height: 1.6em; }
+    @media (max-width: 1000px) { .cards { grid-template-columns: repeat(3, 1fr); } .hero { padding-inline: 6vw; } }
+    @media (max-width: 680px) {
+      .topbar { align-items: flex-start; flex-direction: column; }
+      nav { width: 100%; flex-wrap: wrap; }
+      nav a { padding: .4rem .65rem; font-size: .88rem; }
+      .hero { grid-template-columns: 1fr; text-align: center; padding-block: 3rem; }
+      .hero p { margin-inline: auto; }
+      .brain-art { min-height: 130px; }
+      .brain { font-size: 9rem; }
+      .cards { grid-template-columns: 1fr; max-width: 420px; }
+      .topic-card { min-height: auto; }
+      .benefits { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="Brain Explorers home">
+      <span class="brand-mark" aria-hidden="true">🧠</span>
+      <span><span class="brand-name">Brain Explorers</span><span class="tagline">Small brains. Big questions.</span></span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="#home">Home</a><a href="#explore">Explore</a><a href="#about">About</a><a href="#educators">For educators</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div>
+        <div class="eyebrow">Curiosity starts here ✨</div>
+        <h1>Welcome to<br>Brain Explorers!</h1>
+        <p>Discover the amazing things your brain can do. Explore fun activities, cool facts, and tiny experiments about the most incredible thing in your body — your brain!</p>
+        <a class="button" href="#explore">Start exploring <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="brain-art" aria-label="A friendly brain illustration" role="img"><div class="brain">🧠</div></div>
+    </section>
+
+    <section id="explore">
+      <div class="section-heading">
+        <h2>✨ Explore the Brain ✨</h2>
+        <p>Pick a question to start your next brain adventure!</p>
+      </div>
+      <div class="cards">
+        <article class="topic-card">
+          <div class="topic-icon" aria-hidden="true">🌙</div>
+          <h3>Why Do We Dream?</h3>
+          <p>Find out what happens in your brain when you sleep.</p>
+          <button class="button topic-button" data-topic="dreams">Explore →</button>
+        </article>
+        <article class="topic-card">
+          <div class="topic-icon" aria-hidden="true">👁️</div>
+          <h3>Can Your Brain Be Fooled?</h3>
+          <p>Discover how your brain can trick you — and why.</p>
+          <button class="button topic-button" data-topic="illusions">Explore →</button>
+        </article>
+        <article class="topic-card">
+          <div class="topic-icon" aria-hidden="true">🧩</div>
+          <h3>Why Do We Forget?</h3>
+          <p>Learn how memory works — and why it isn't perfect.</p>
+          <button class="button topic-button" data-topic="memory">Explore →</button>
+        </article>
+        <article class="topic-card">
+          <div class="topic-icon" aria-hidden="true">🎧</div>
+          <h3>Why Does Music Get Stuck in Your Head?</h3>
+          <p>Explore how your brain remembers, repeats, and loves music.</p>
+          <button class="button topic-button" data-topic="music">Explore →</button>
+        </article>
+        <article class="topic-card">
+          <div class="topic-icon" aria-hidden="true">🧪</div>
+          <h3>Try a Brain Experiment</h3>
+          <p>Try a simple activity you can do at home or school.</p>
+          <button class="button topic-button" data-topic="experiment">Explore →</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="why" id="about">
+      <div class="section-heading">
+        <h2>🌟 Why It Matters</h2>
+        <p>Your brain helps you think, feel, learn, and connect. Understanding it can help us care for ourselves and appreciate how wonderfully curious humans are.</p>
+      </div>
+      <div class="benefits">
+        <div><div class="benefit-icon">💡</div><h3>Build curiosity</h3><p>Ask big questions.</p></div>
+        <div><div class="benefit-icon">🌱</div><h3>Grow confidence</h3><p>Try, learn, and explore.</p></div>
+        <div><div class="benefit-icon">💗</div><h3>Make a difference</h3><p>Use knowledge to help others.</p></div>
+        <div><div class="benefit-icon">🔎</div><h3>Keep exploring</h3><p>There's always more to discover.</p></div>
+      </div>
+    </section>
+
+    <section id="educators" style="padding-top:2rem;padding-bottom:2rem">
+      <div class="quote">“A curious mind is a powerful thing.” ✨</div>
+      <div class="section-heading" style="margin-top:2rem;margin-bottom:0">
+        <h2>For parents & educators</h2>
+        <p>These activities are designed as friendly starting points for curiosity. Adults can help younger learners explore and discuss the questions together.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <a class="brand" href="#home"><span class="brand-mark" aria-hidden="true">🧠</span><span><span class="brand-name">Brain Explorers</span><span class="tagline">Small brains. Big questions.</span></span></a>
+    <p>Made with curiosity 💜 · A student-created learning project</p>
+    <a href="#home">Back to top ↑</a>
+  </footer>
+
+  <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <button class="close" id="closeModal" aria-label="Close activity">×</button>
+      <div class="eyebrow">Your brain adventure</div>
+      <h2 id="modalTitle">Let's explore!</h2>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    const activities = {
+      dreams: {
+        title: "Why do we dream? 🌙",
+        intro: "Dreams can happen during several stages of sleep. They may draw on memories, feelings, and imagination. Scientists are still studying exactly why we dream.",
+        activity: "Dream detective",
+        task: "If you remember a dream, jot down one detail when you wake up. Later, ask yourself: did it remind you of a place, feeling, or event? You don't need to share anything personal.",
+        fact: "Dreams can feel vivid, but not everyone remembers them."
+      },
+      illusions: {
+        title: "Can your brain be fooled? 👁️",
+        intro: "Your brain combines information from your eyes with context and past experience. Sometimes that useful shortcut leads to a surprising perception.",
+        activity: "Try a quick perception check",
+        task: "Look at the two orange circles below. Which one looks bigger? The circles are the same size; the surrounding circles can change how they appear.",
+        fact: "Seeing is an active process: your brain helps interpret signals from your eyes.",
+        quiz: true
+      },
+      memory: {
+        title: "Why do we forget? 🧩",
+        intro: "Memory isn't a perfect recording. Attention, time, interference, and how we revisit information can all affect what we remember.",
+        activity: "The 10-second memory game",
+        task: "Read these words once: apple, river, candle, kitten, green, piano. Hide the list and see how many you can recall. Try grouping them into categories next time.",
+        fact: "Grouping information into meaningful chunks can make it easier to remember."
+      },
+      music: {
+        title: "Why does music get stuck in your head? 🎧",
+        intro: "A song fragment that repeats in your mind is often called an earworm. Repetition, catchy patterns, and familiar music may help a tune pop back into awareness.",
+        activity: "Notice the pattern",
+        task: "Think of a tune that gets stuck in your head. Without playing it, notice whether a short section or repeated rhythm comes to mind most easily.",
+        fact: "Music engages multiple brain systems, including those involved in hearing, movement, memory, and emotion."
+      },
+      experiment: {
+        title: "Try a brain experiment! 🧪",
+        intro: "Let's explore how attention affects what you notice. This is a simple observation activity, not a medical test.",
+        activity: "Focused attention",
+        task: "For 20 seconds, count how many times you see the letter A in a short paragraph. Then read it again without counting and notice other details you missed. Ask an adult to choose a paragraph.",
+        fact: "Focusing on one thing can make other details less noticeable."
+      }
+    };
+
+    const backdrop = document.getElementById("modalBackdrop");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalContent = document.getElementById("modalContent");
+    const closeModal = document.getElementById("closeModal");
+    let lastFocused = null;
+
+    function openActivity(key) {
+      const item = activities[key];
+      if (!item) return;
+      lastFocused = document.activeElement;
+      modalTitle.textContent = item.title;
+      modalContent.innerHTML = `
+        <p>${item.intro}</p>
+        <div class="activity-box"><strong>✨ ${item.activity}</strong><p>${item.task}</p></div>
+        ${item.quiz ? `<div class="activity-box"><strong>Quick question</strong><p>Which orange circle looks bigger?</p><div class="answer-row"><button data-answer="left">The left one</button><button data-answer="right">The right one</button><button data-answer="same">They are the same size</button></div><p id="feedback" aria-live="polite"></p></div>` : ""}
+        <p><strong>Whoa!</strong> ${item.fact}</p>
+        <p><small>Keep exploring: ask a new question, make a prediction, and see what you notice.</small></p>`;
+      backdrop.classList.add("open");
+      closeModal.focus();
+      const answers = modalContent.querySelectorAll("[data-answer]");
+      answers.forEach(button => button.addEventListener("click", () => {
+        const feedback = document.getElementById("feedback");
+        feedback.textContent = button.dataset.answer === "same"
+          ? "Correct! Context can change how the same-sized circles appear. 🎉"
+          : "Good guess! In this example, the circles are the same size. Context can affect perception.";
+      }));
+    }
+    function closeActivity() {
+      backdrop.classList.remove("open");
+      if (lastFocused) lastFocused.focus();
+    }
+    document.querySelectorAll(".topic-button").forEach(button => {
+      button.addEventListener("click", () => openActivity(button.dataset.topic));
+    });
+    closeModal.addEventListener("click", closeActivity);
+    backdrop.addEventListener("click", event => { if (event.target === backdrop) closeActivity(); });
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && backdrop.classList.contains("open")) closeActivity();
+    });
+  </script>
+</body>
+</html>
